@@ -1,0 +1,122 @@
+<% 
+signinflg = false;
+if("undefined" != typeof session && session.user && session.user.screen_name){
+	signinflg = true;
+	user_screen_name=session.user.screen_name;
+}
+//signinflg=("undefined" != typeof session && session.user && session.user.screen_name);
+
+um = (typeof _data != "undefined" && _data.unreadmessage)?_data.unreadmessage.length:0;  
+%>
+
+<header>
+
+<input type="hidden" id="user_screen_name" value="<%= (signinflg)?session.user.screen_name:"" %>" >
+<div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Mono gatari</a>
+        </div>
+        <div class="collapse navbar-collapse">
+        <form action="/search" method="get">
+          <ul class="nav navbar-nav">
+          <li>
+					
+					<a href="javascript:void(0)" id="messageLink">
+						<span class="screen-name">
+						hello <%= (signinflg)?session.user.screen_name:"guest" %>!
+					<% if(um){ %> (<%= um %>) <% } %>
+					</a>
+						</span>
+						<% if(signinflg){ %>
+						<div id="messageBox_head" class="messanger all-floating" style="display:none;">
+		                    <div class="well">
+		                        <div id="messageList" class="message-content">
+		                        <h3 class="text text-info" style="font-size:21px;">message box</h3>
+									<% if(um) { for(var i in _data.unreadmessage) {%>
+										<div> <%= i + ". " + _data.unreadmessage[i].title %> </div>
+										<div>from: <a href="javascript:void(0);" onclick="openSendMSGBox('<%= _data.unreadmessage[i].from_id %>','<%= _data.unreadmessage[i].from_screen_name %>')"> <%= _data.unreadmessage[i].from_screen_name %> </a></div>
+										<div> <%= _data.unreadmessage[i].message %> </div>
+										
+									<% }} else { %>
+										no message
+									<% } %>
+		                        </div>
+								<div id="messageForm" style="display:none;" class="message-content">
+								<h3 class="text text-info" style="font-size:21px;">message to <span id="sendTo_Name_menu" style="color:#30802C;"></span></h3>
+								<div class="message-input">
+		                            <label for="send_title_menu"><strong>Title</strong> <span class="asterisk">*</span></label> 
+		                            <input id="send_title_menu" type="text" value=""> 
+		                            <label for="send_message_menu"><strong>Message</strong><span class="asterisk">*</span></label>
+		                            <textarea id="send_message_menu" type="text" value=""></textarea> 
+		                        </div>
+		                            <div style="text-align:center">
+		                            <button class="btn-primary" id="cancelMessageBoxBtn_menu" style="width:40%" type="button" value="Subscribe">cancel</button>
+		                            <button class="btn-primary" id="sendMessageBtn_menu" style="width:40%" type="button" value="Subscribe">send</button>
+		                            </div>
+		                            <input type="hidden" id="sendTo_Id_menu" value=""/>
+		                        </div>
+		                    </div>
+		                </div>
+	                	<% } %>
+					</li>
+          <!-- area --><!-- catetory -->
+          	<%- include menu_select_area_category.ejs %>
+					
+		          <!-- dropdown -->
+		          	<li class="dropdown">
+			          <a href="#" class="dropdown-toggle" data-toggle="dropdown">menu <b class="caret"></b></a>
+			          <ul class="dropdown-menu">
+			          		<li>
+								<a href="/">Top</a>
+							</li>
+							<li>
+								<a href="/random">random</a>
+							</li>
+			            <% if(signinflg){ %>
+							<li>
+								<a href="/registration">registration</a>
+							</li>
+							<li>
+								<a href="/mypage">mypage</a>
+							</li>
+							<% } 
+							if("Top" == title || "search" == title){ %>
+							<li class="res-mod-lis">
+								<a id="dispMode" href='javascript:void(0);'>disp</a>
+							</li>
+						<% } %>
+							<!-- show only when sign in -->
+						<% if(signinflg){ %>
+							<li> 
+								<a href="/signout">signout</a>
+							</li>
+						<% } else { %>
+							<li>
+								<a href="/signin">signin</a>
+							</li>
+							<li>
+								<a href="/signup">signup</a>
+							</li>
+						<% } %>
+			          </ul>
+			        </li>
+          	</ul>
+          </form>
+        </div><!-- /.nav-collapse -->
+      </div><!-- /.container -->
+    </div>
+     
+    
+			<div class='eight columns logo'>
+				<a href="/" title="Artistic.ly">
+				[title logo]
+				</a>
+			</div>
+		</header>
