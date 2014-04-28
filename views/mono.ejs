@@ -49,9 +49,12 @@
 					<%= _data.mono.mono_name %>
 				</div>
 				<div class="innercontent">
-					by <a href="/userinfo?u=<%= _data.mono.writer_id %>" ><%= _data.mono.writer_screen_name %></a> [<a href="javascript:void(0)" id="sendmessagelink" >send message</a>]
+					by <a href="/userinfo?u=<%= _data.mono.writer_id %>" ><%= _data.mono.writer_screen_name %></a>
+					<% if (user_screen_name != _data.mono.writer_screen_name) { %> 
+					[<a href="javascript:void(0)" id="sendmessagelink" >send message</a>]
+					<% } %>
 				</div>
-		<!-- messanger -->				
+		<!-- messanger -->
 				<div id="messageBox" class="messanger all-floating" style="display:none;">
                     <div class="well">
                         <h3 class="text text-info" style="font-size:21px;">send message to <font color="green" style="font-weight:bolder;"><%= _data.mono.writer_screen_name %></font></h3>
