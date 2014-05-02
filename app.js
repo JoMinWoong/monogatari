@@ -88,6 +88,23 @@ app.get('/mypage', function(req, res){
 	});
 });
 
+app.get('/usermessage', function(req, res){
+	//bring unloggedin user to signin page
+	if(!req.session.user) {
+		req.session.lastPage = "/mypage";
+		res.redirect('/signin');
+		return;
+	}
+	monoProvider.findUserInformation(req.session.user.uid,req.session,function(error, result){
+		res.render('usermessage', {
+            title: 'usermessage',
+            session: req.session,
+            _jsdata:jsdata.data,
+            _data:result
+        });
+	});
+});
+
 
 //show mono info
 app.get('/userinfo', function(req, res){
@@ -163,12 +180,23 @@ app.post('/registration', function(req, res){
 app.get('/mono', function(req, res){
 	req.session.lastPage = req._parsedUrl.path;
 	monoProvider.findMonoById(decodeURIComponent(req.param('m')),req.session,function(error, result){
-		res.render('mono', {
-            title: 'category',
-            session: req.session,
-            _jsdata:jsdata.data,
-            _data:result
-        });
+		_lib.log(result,"result");
+		if(result){
+			res.render('mono', {
+	            title: 'category',
+	            session: req.session,
+	            _jsdata:jsdata.data,
+	            _data:result
+	        });
+		}
+		else {
+			res.render('message', {
+	            title: 'message',
+	            session: req.session,
+	            _jsdata:jsdata.data,
+	            _data:'no mono data'
+	        });
+		}
 	});
 });
 

@@ -1,5 +1,6 @@
 <% 
 signinflg = false;
+user_screen_name = false;
 if("undefined" != typeof session && session.user && session.user.screen_name){
 	signinflg = true;
 	user_screen_name=session.user.screen_name;
@@ -85,6 +86,9 @@ um = (typeof _data != "undefined" && _data.unreadmessage)?_data.unreadmessage.le
 							</li>
 							<li>
 								<a href="/mypage">mypage</a>
+							</li>
+							<li>
+								<a href="/usermessage">message</a>
 							</li>
 							<% } 
 							if("Top" == title || "search" == title){ %>

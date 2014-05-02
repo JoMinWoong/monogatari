@@ -133,19 +133,19 @@ monoProvider.prototype.findMonoById = function(did,ses,callback) {
 				//get mono list that user uploaded for exchange
 				  if("undefined" != typeof ses && ses.user  && ses.user.uid){
     					col_mono.find({"writer_id":lib.convertObjectId(ses.user.uid)}).toArray(function(error, results) {
+    						_lib.log(results,"rrreeesssuulltttsss");
 		      	      		  if( error ) callback(error);
 		      	      		  else if(results.length){
 	      	      				  res.usermono = results;
 	      	      			  }
 		      	      		  //user info(message from other users)
-		      	      		  lib.getUnreadMessageAndCallback(db,ses.user.uid,res,callback);
+      	      				  lib.getUnreadMessageAndCallback(db,ses.user.uid,res,callback);
 		      	        });
 				  }
 				  else callback(null, res);
 			  }
 			  else {
-				  res.mono = {};
-    			  callback(null, res);
+    			  callback(null, false);
 			  }
 		  }
   });

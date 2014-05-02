@@ -75,8 +75,6 @@ $("#sendMessageBtn_menu").click(function () {
 });
 $("#dispMode").click(function(){
 	$("#contentList").toggleClass("res-mode");
-	console.log(($("#contentList").is(".res-mode"))?"1":"0");
-	
 	createCookie("resMode",($("#contentList").is(".res-mode"))?"1":"0",30);
 });
 (function(){
